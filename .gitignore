@@ -1,5 +1,6 @@
 /tmp
 /node_modules
+.idea
 *.log
 !/test/corpus/*.log
 /*.tgz

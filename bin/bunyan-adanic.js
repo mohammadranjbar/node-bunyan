@@ -791,29 +791,38 @@ function emitRecord(rec, line, opts, stylize) {
 
         // Time.
         var time;
-        if (!short && opts.timeFormat === TIME_UTC) {
-            // Fast default path: We assume the raw `rec.time` is a UTC time
-            // in ISO 8601 format (per spec).
-            time = '[' + rec.time + ']';
-        } else if (!moment && opts.timeFormat === TIME_UTC) {
-            // Don't require momentjs install, as long as not using TIME_LOCAL.
-            time = rec.time.substr(11);
-        } else {
-            var tzFormat;
-            var moTime = moment(rec.time);
-            switch (opts.timeFormat) {
-            case TIME_UTC:
-                tzFormat = TIMEZONE_UTC_FORMATS[short ? 'short' : 'long'];
-                moTime.utc();
-                break;
-            case TIME_LOCAL:
-                tzFormat = TIMEZONE_LOCAL_FORMATS[short ? 'short' : 'long'];
-                break;
-            default:
-                throw new Error('unexpected timeFormat: ' + opts.timeFormat);
-            };
-            time = moTime.format(tzFormat);
-        }
+        // if (!short && opts.timeFormat === TIME_UTC) {
+        //     // Fast default path: We assume the raw `rec.time` is a UTC time
+        //     // in ISO 8601 format (per spec).
+        //     time = '[' + rec.time + ']';
+        // } else if (!moment && opts.timeFormat === TIME_UTC) {
+        //     // Don't require momentjs install, as long as not using TIME_LOCAL.
+        //     time = rec.time.substr(11);
+        // } else {
+        //     var tzFormat;
+        //     var moTime = moment(rec.time);
+        //     switch (opts.timeFormat) {
+        //     case TIME_UTC:
+        //         tzFormat = TIMEZONE_UTC_FORMATS[short ? 'short' : 'long'];
+        //         moTime.utc();
+        //         break;
+        //     case TIME_LOCAL:
+        //         tzFormat = TIMEZONE_LOCAL_FORMATS[short ? 'short' : 'long'];
+        //         break;
+        //     default:
+        //         throw new Error('unexpected timeFormat: ' + opts.timeFormat);
+        //     };
+        //     time = moTime.format(tzFormat);
+        // }
+
+        /**
+         * I just commented above lines and added these lines to log
+         * with server time
+         */
+          time = "["+moment(rec.time,'[[]YYYY-MM-DD[T]HH:mm:ss.SSSZ[]]').
+          format(process.env.TIME_FORMAT || 'YYYY-MM-DD/HH:mm:ss.SSS')+"]"
+
+
         time = stylize(time, 'none');
         delete rec.time;
 
