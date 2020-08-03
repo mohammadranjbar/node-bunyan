@@ -24,13 +24,16 @@ is that when logging that when pipe logs to bunyan that library show time like t
 `npm i -g bunyan-adnaic`
 Bunyan log output is a stream of JSON objects. This is great for processing, but not for reading directly. A bunyan tool is provided for pretty-printing bunyan logs and for filtering (e.g. | bunyan -c 'this.foo == "bar"'). Using our example above:
 
-$ node hi.js | bunyan-adanic
-[2013-01-04T19:01:18.241]  INFO: myapp/40208 on banana.local: hi
-[2013-01-04T19:01:18.242]  WARN: myapp/40208 on banana.local: au revoir (lang=fr)
+`$ node hi.js | bunyan-adanic`
+
+    [2013-01-04T19:01:18.241]  INFO: myapp/40208 on banana.local: hi
+    [2013-01-04T19:01:18.242]  WARN: myapp/40208 on banana.local: au revoir (lang=fr)
 See the screenshot above for an example of the default coloring of rendered log output. That example also shows the nice formatting automatically done for some well-known log record fields (e.g. req is formatted like an HTTP request, res like an HTTP response, err like an error stack trace).
 
 One interesting feature is filtering of log content, which can be useful for digging through large log files or for analysis. We can filter only records above a certain level:
 
-$ node hi.js | bunyan-adanic -l warn
-[2013-01-04T19:08:37.182]  WARN: myapp/40353 on banana.local: au revoir (lang=fr)
+`$ node hi.js | bunyan-adanic -l warn`
+
+    [2013-01-04T19:08:37.182]  WARN: myapp/40353 on banana.local: au revoir (lang=fr)
+
 Or filter on the JSON fields in the records (e.g. only showing the French records in our contrived example):
